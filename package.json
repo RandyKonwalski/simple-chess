@@ -4,13 +4,17 @@
   "description": "",
   "main": "sketch.js",
   "scripts": {
-    "start": "serve",
-    "build": "echo This is a static template, there is no bundler or bundling involved!"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "Danny Ruchtie",
   "license": "MIT",
   "devDependencies": {
     "serve": "^11.2.0"
+  },
+  "dependencies": {
+    "vite": "^2.9.6"
   }
 }

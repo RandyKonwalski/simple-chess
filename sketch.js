@@ -2,268 +2,14 @@
 
 let pieceImages;
 
-let pieceLocations = [
-  {
-    type: "king",
-    color: "black",
-    pos: {
-      x: 4,
-      y: 7
-    }
-  },
-  {
-    type: "queen",
-    color: "black",
-    pos: {
-      x: 3,
-      y: 7
-    }
-  },
-  {
-    type: "bishop",
-    color: "black",
-    pos: {
-      x: 2,
-      y: 7
-    }
-  },
-  {
-    type: "bishop",
-    color: "black",
-    pos: {
-      x: 5,
-      y: 7
-    }
-  },
-  {
-    type: "knight",
-    color: "black",
-    pos: {
-      x: 1,
-      y: 7
-    }
-  },
-  {
-    type: "knight",
-    color: "black",
-    pos: {
-      x: 6,
-      y: 7
-    }
-  },
-  {
-    type: "rook",
-    color: "black",
-    pos: {
-      x: 0,
-      y: 7
-    }
-  },
-  {
-    type: "rook",
-    color: "black",
-    pos: {
-      x: 7,
-      y: 7
-    }
-  },
-  {
-    type: "pawn",
-    color: "black",
-    pos: {
-      x: 0,
-      y: 6
-    }
-  },  
-  {
-    type: "pawn",
-    color: "black",
-    pos: {
-      x: 1,
-      y: 6
-    }
-  },
-  {
-    type: "pawn",
-    color: "black",
-    pos: {
-      x: 2,
-      y: 6
-    }
-  },
-  {
-    type: "pawn",
-    color: "black",
-    pos: {
-      x: 3,
-      y: 6
-    }
-  },
-  {
-    type: "pawn",
-    color: "black",
-    pos: {
-      x: 4,
-      y: 6
-    }
-  },
-  {
-    type: "pawn",
-    color: "black",
-    pos: {
-      x: 5,
-      y: 6
-    }
-  },
-  {
-    type: "pawn",
-    color: "black",
-    pos: {
-      x: 6,
-      y: 6
-    }
-  },
-  {
-    type: "pawn",
-    color: "black",
-    pos: {
-      x: 7,
-      y: 6
-    }
-  },
-
-
-  {
-    type: "king",
-    color: "white",
-    pos: {
-      x: 4,
-      y: 0
-    }
-  },
-  {
-    type: "queen",
-    color: "white",
-    pos: {
-      x: 3,
-      y: 0
-    }
-  },
-  {
-    type: "bishop",
-    color: "white",
-    pos: {
-      x: 2,
-      y: 0
-    }
-  },
-  {
-    type: "bishop",
-    color: "white",
-    pos: {
-      x: 5,
-      y: 0
-    }
-  },
-  {
-    type: "knight",
-    color: "white",
-    pos: {
-      x: 1,
-      y: 0
-    }
-  },
-  {
-    type: "knight",
-    color: "white",
-    pos: {
-      x: 6,
-      y: 0
-    }
-  },
-  {
-    type: "rook",
-    color: "white",
-    pos: {
-      x: 0,
-      y: 0
-    }
-  },
-  {
-    type: "rook",
-    color: "white",
-    pos: {
-      x: 7,
-      y: 0
-    }
-  },
-  {
-    type: "pawn",
-    color: "white",
-    pos: {
-      x: 0,
-      y: 1
-    }
-  },  
-  {
-    type: "pawn",
-    color: "white",
-    pos: {
-      x: 1,
-      y: 1
-    }
-  },
-  {
-    type: "pawn",
-    color: "white",
-    pos: {
-      x: 2,
-      y: 1
-    }
-  },
-  {
-    type: "pawn",
-    color: "white",
-    pos: {
-      x: 3,
-      y: 1
-    }
-  },
-  {
-    type: "pawn",
-    color: "white",
-    pos: {
-      x: 4,
-      y: 1
-    }
-  },
-  {
-    type: "pawn",
-    color: "white",
-    pos: {
-      x: 5,
-      y: 1
-    }
-  },
-  {
-    type: "pawn",
-    color: "white",
-    pos: {
-      x: 6,
-      y: 1
-    }
-  },
-  {
-    type: "pawn",
-    color: "white",
-    pos: {
-      x: 7,
-      y: 1
-    }
-  }
-];
-
 let tileData = [];
+
+const STATE_UNSELECTED = 0;
+const STATE_PIECESELECTED = 1;
+
+let selectState = 0;
+let previous_color = null;
+let selectTile = [0, 0];
 
 const tileSize = 100;
 const margin = 13;
@@ -271,67 +17,6 @@ const margin = 13;
 function drawTile(x, y, tileSize, color) {
   fill(color);
   rect(x, y, tileSize, tileSize);
-}
-
-function drawPiece(x, y, piece, color) {
-  switch (piece) {
-    case "king":
-      image(
-        color === "black" ? pieceImages.king.black : pieceImages.king.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "queen":
-      image(
-        color === "black" ? pieceImages.queen.black : pieceImages.queen.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "knight":
-      image(
-        color === "black" ? pieceImages.knight.black : pieceImages.knight.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "bishop":
-      image(
-        color === "black" ? pieceImages.bishop.black : pieceImages.bishop.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "rook":
-      image(
-        color === "black" ? pieceImages.rook.black : pieceImages.rook.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "pawn":
-      image(
-        color === "black" ? pieceImages.pawn.black : pieceImages.pawn.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    default:
-      break;
-  }
 }
 
 function drawBoard() {
@@ -387,9 +72,46 @@ function newGameButton() {
   movePiece(0, 0, 4, 4);
 }
 
+class Tiles{
+  static findTile(x, y) {
+    let tile = tileData.filter(t => t.tile.x === x && t.tile.y === y);
+
+    if(tile[0]){
+      return tile[0];
+    }
+
+    return null;
+  }
+
+  static findTileByLocation(x, y) {
+    let tile = tileData.filter(t => {
+      const minX = t.tilePos.posX;
+      const maxX = t.tilePos.posX + tileSize;
+      const minY = t.tilePos.posY;
+      const maxY = t.tilePos.posY + tileSize;
+  
+      if(x > minX && x < maxX){
+        if(y > minY && y < maxY){
+          return true;
+        }
+      }
+      return false;
+    });
+    if(tile[0]){
+      return tile[0];
+    }
+    return null;
+  }
+}
+
+function changeSquareColor(x, y, color) {
+  let t = tileData.filter(tile => tile.tile.x === x && tile.tile.y === y);
+  t[0].color = color;
+}
+
 // Implement these
 function displayAllowedMoves(piece, x, y) {
-  // Mark squares with red if a move is possible.
+  
 }
 
 function isAllowedMove(piece, x, y, move) {
@@ -397,7 +119,9 @@ function isAllowedMove(piece, x, y, move) {
 }
 
 /**
+ * 
  * Setup and p5 Stuff goes here.
+ * 
  */
 function preload() {
   pieceImages = {
@@ -444,9 +168,27 @@ function setup() {
 }
 
 function draw() {
-  // Put drawings here
   stroke(0);
   drawBoard();
+}
+
+function mouseClicked() {
+  if(selectState === 0) {
+    let tile = Tiles.findTileByLocation(mouseX, mouseY);
+    if(tile){
+      selectTile = [tile.tile.x, tile.tile.y];
+      previous_color = tile.color;
+      selectState = STATE_PIECESELECTED;
+    }
+  }
+  else {
+    let fromTile = Tiles.findTile(selectTile[0], selectTile[1]);
+    let toTile = Tiles.findTileByLocation(mouseX, mouseY);
+    movePiece(selectTile[0], selectTile[1], toTile.tile.x, toTile.tile.y);
+    fromTile.color = previous_color;
+    previous_color = null;
+    selectState = STATE_UNSELECTED;
+  }
 }
 
 // This Redraws the Canvas when resized
