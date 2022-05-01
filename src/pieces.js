@@ -1,4 +1,4 @@
-let pieceLocations = [
+let startLoc = [
   {
     type: "king",
     color: "black",

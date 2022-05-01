@@ -1,5 +1,6 @@
 /* eslint-disable no-undef, no-unused-vars */
 
+let pieceLocations = JSON.parse(JSON.stringify(startLoc));
 let pieceImages;
 
 let tileData = [];
@@ -69,47 +70,10 @@ const ngb = document.getElementById("newGameButton");
 ngb.addEventListener("click", newGameButton);
 
 function newGameButton() {
-  movePiece(0, 0, 4, 4);
+  pieceLocations = JSON.parse(JSON.stringify(startLoc));
 }
 
-class Tiles{
-  static findTile(x, y) {
-    let tile = tileData.filter(t => t.tile.x === x && t.tile.y === y);
-
-    if(tile[0]){
-      return tile[0];
-    }
-
-    return null;
-  }
-
-  static findTileByLocation(x, y) {
-    let tile = tileData.filter(t => {
-      const minX = t.tilePos.posX;
-      const maxX = t.tilePos.posX + tileSize;
-      const minY = t.tilePos.posY;
-      const maxY = t.tilePos.posY + tileSize;
-  
-      if(x > minX && x < maxX){
-        if(y > minY && y < maxY){
-          return true;
-        }
-      }
-      return false;
-    });
-    if(tile[0]){
-      return tile[0];
-    }
-    return null;
-  }
-}
-
-function changeSquareColor(x, y, color) {
-  let t = tileData.filter(tile => tile.tile.x === x && tile.tile.y === y);
-  t[0].color = color;
-}
-
-// Implement these
+// Move System
 function displayAllowedMoves(piece, x, y) {
   
 }
@@ -175,15 +139,18 @@ function draw() {
 function mouseClicked() {
   if(selectState === 0) {
     let tile = Tiles.findTileByLocation(mouseX, mouseY);
+    // TODO: Check if tile has piece.
     if(tile){
       selectTile = [tile.tile.x, tile.tile.y];
       previous_color = tile.color;
+      tile.color = "green";
       selectState = STATE_PIECESELECTED;
     }
   }
   else {
     let fromTile = Tiles.findTile(selectTile[0], selectTile[1]);
     let toTile = Tiles.findTileByLocation(mouseX, mouseY);
+    if(piece)
     movePiece(selectTile[0], selectTile[1], toTile.tile.x, toTile.tile.y);
     fromTile.color = previous_color;
     previous_color = null;
