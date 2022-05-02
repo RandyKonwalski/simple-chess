@@ -259,63 +259,98 @@ let startLoc = [
   }
 ];
 
-function drawPiece(x, y, piece, color) {
-  switch (piece) {
-    case "king":
-      image(
-        color === "black" ? pieceImages.king.black : pieceImages.king.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "queen":
-      image(
-        color === "black" ? pieceImages.queen.black : pieceImages.queen.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "knight":
-      image(
-        color === "black" ? pieceImages.knight.black : pieceImages.knight.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "bishop":
-      image(
-        color === "black" ? pieceImages.bishop.black : pieceImages.bishop.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "rook":
-      image(
-        color === "black" ? pieceImages.rook.black : pieceImages.rook.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    case "pawn":
-      image(
-        color === "black" ? pieceImages.pawn.black : pieceImages.pawn.white,
-        x * tileSize + margin,
-        y * tileSize + margin,
-        tileSize - margin * 2,
-        tileSize - margin * 2
-      );
-      break;
-    default:
-      break;
+class Piece {
+  constructor(x, y, type, color) {
+    this.x = x;
+    this.y = y;
+    this.type = type;
+    this.color = color;
   }
+
+  drawPiece() {
+    switch (this.type) {
+      case "king":
+        image(
+          color === "black" ? pieceImages.king.black : pieceImages.king.white,
+          this.x * tileSize + margin,
+          this.y * tileSize + margin,
+          tileSize - margin * 2,
+          tileSize - margin * 2
+        );
+        break;
+      case "queen":
+        image(
+          color === "black" ? pieceImages.queen.black : pieceImages.queen.white,
+          this.x * tileSize + margin,
+          this.y * tileSize + margin,
+          tileSize - margin * 2,
+          tileSize - margin * 2
+        );
+        break;
+      case "knight":
+        image(
+          color === "black" ? pieceImages.knight.black : pieceImages.knight.white,
+          this.x * tileSize + margin,
+          this.y * tileSize + margin,
+          tileSize - margin * 2,
+          tileSize - margin * 2
+        );
+        break;
+      case "bishop":
+        image(
+          color === "black" ? pieceImages.bishop.black : pieceImages.bishop.white,
+          this.x * tileSize + margin,
+          this.y * tileSize + margin,
+          tileSize - margin * 2,
+          tileSize - margin * 2
+        );
+        break;
+      case "rook":
+        image(
+          color === "black" ? pieceImages.rook.black : pieceImages.rook.white,
+          this.x * tileSize + margin,
+          this.y * tileSize + margin,
+          tileSize - margin * 2,
+          tileSize - margin * 2
+        );
+        break;
+      case "pawn":
+        image(
+          color === "black" ? pieceImages.pawn.black : pieceImages.pawn.white,
+          this.x * tileSize + margin,
+          this.y * tileSize + margin,
+          tileSize - margin * 2,
+          tileSize - margin * 2
+        );
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+class PieceUtils {
+  static getPieceByLocation(x, y){
+    let piece = allPieces.filter(p => p.x == x && p.y == y);
+
+    if(piece[0]){
+      return piece[0];
+    }
+    return null;
+  }
+  
+  static movePiece(fromX, fromY, toX, toY) {
+    let pieceFrom = this.getPieceByLocation(fromX, fromY);
+    if(pieceFrom){
+      eliminatePiece(toX, toY);
+      pieceFrom.x = toX;
+      pieceFrom.y = toY;
+    }
+  }
+}
+
+function eliminatePiece(x, y) {
+  let New = allPieces.filter(piece => piece.x !== x || piece.y !== y);
+
+  allPieces = New;
 }

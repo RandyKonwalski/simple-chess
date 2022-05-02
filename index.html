@@ -10,6 +10,14 @@
   <body>
     <button id="newGameButton">New Game</button>
     <button>Open Editor</button>
+    <div class="flex-container">
+      <div id="canvas"></div>
+      <div id="debug-window" class="window">
+        <span>
+          Selected Piece: <div id="piece"></div>
+        </span>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
     <script src="src/pieces.js"></script>
     <script src="src/tiles.js"></script>

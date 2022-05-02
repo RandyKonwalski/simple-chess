@@ -1,6 +1,22 @@
-class Tiles{
+class Tile {
+  constructor(x, y, posX, posY, size, color) {
+    this.x = x;
+    this.y = y;
+    this.posX = posX;
+    this.posY = posY;
+    this.size = size;
+    this.color = color;
+  }
+
+  drawTile() {
+    fill(this.color);
+    rect(this.posX, this.posY, this.size, this.size);
+  }
+}
+
+class TileUtil{
   static findTile(x, y) {
-    let tile = tileData.filter(t => t.tile.x === x && t.tile.y === y);
+    let tile = tileData.filter(t => t.x === x && t.y === y);
 
     if(tile[0]){
       return tile[0];
@@ -11,10 +27,10 @@ class Tiles{
 
   static findTileByLocation(x, y) {
     let tile = tileData.filter(t => {
-      const minX = t.tilePos.posX;
-      const maxX = t.tilePos.posX + tileSize;
-      const minY = t.tilePos.posY;
-      const maxY = t.tilePos.posY + tileSize;
+      const minX = t.posX;
+      const maxX = t.posX + tileSize;
+      const minY = t.posY;
+      const maxY = t.posY + tileSize;
   
       if(x > minX && x < maxX){
         if(y > minY && y < maxY){
@@ -30,7 +46,7 @@ class Tiles{
   }
   
   static changeTileColor(x, y, color) {
-    let t = tileData.filter(tile => tile.tile.x === x && tile.tile.y === y);
+    let t = tileData.filter(tile => tile.x === x && tile.y === y);
     t[0].color = color;
   }
 }
