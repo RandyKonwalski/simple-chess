@@ -31,6 +31,21 @@ function parseStartLocation(array) {
   return result;
 }
 
+function resetBoardTiles() {
+  tileData = [];
+  let color = true;
+  for (let y = 0; y < 8; y++) {
+    for (let x = 0; x < 8; x++) {
+      tileData.push(
+        new Tile(x, y, x * tileSize, y * tileSize, tileSize, color ? 0 : 255)
+      );
+      color = !color;
+    }
+    color = !color;
+  }
+  redraw();
+}
+
 function drawBoard() {
   tileData.forEach(tile => {
     color = !color;
@@ -42,12 +57,7 @@ function drawBoard() {
   });
 }
 
-const ngb = document.getElementById("newGameButton");
-ngb.addEventListener("click", newGameButton);
 
-function newGameButton() {
-  allPieces = parseStartLocation(startLoc);
-}
 
 // Move System
 function displayAllowedMoves(piece, x, y) {
@@ -92,6 +102,22 @@ function parseChessNotation(chessString) {
     }
   }
 }*/
+
+const ngb = document.getElementById("newGameButton");
+ngb.addEventListener("click", newGameButton);
+
+function newGameButton() {
+  TileUtil.colorMultipleTiles({
+    startPos: {
+      x: 3,
+      y: 3
+    },
+    step: [
+      [2, STEP_DOWN],
+    ]
+  }, "red");
+  //allPieces = parseStartLocation(startLoc);
+}
 
 /**
  * 
@@ -155,35 +181,51 @@ function mouseClicked() {
     let tile = TileUtil.findTileByLocation(mouseX, mouseY);
     // TODO: Check if tile has piece.
     if(tile){
-      document.getElementById("piece").innerHTML = `[${tile.x}, ${tile.y}]`;
-      selectedPiece = PieceUtils.getPieceByLocation(tile.x, tile.y);
-      previous_color = tile.color;
-      tile.color = "red";
-      selectState = STATE_PIECESELECTED;
+      let piece = PieceUtils.getPieceByLocation(tile.x, tile.y);
+      if(piece){
+        selectedPiece = PieceUtils.getPieceByLocation(tile.x, tile.y);
+        TileUtil.colorMultipleTiles(selectedPiece.getPossibleMoves(), "red");
+        selectState = STATE_PIECESELECTED;
+      }
     }
   }
   else {
     let fromTile = TileUtil.findTile(selectedPiece.x, selectedPiece.y);
     let toTile = TileUtil.findTileByLocation(mouseX, mouseY);
 
-    if(!(fromTile == toTile)) {
+    if(!(fromTile == toTile) && toTile.color == "red") {
       let piece = PieceUtils.getPieceByLocation(toTile.x, toTile.y);
       if(piece){
         if(piece.color !== selectedPiece.color){
+          PieceUtils.eliminatePiece(toTile.x, toTile.y);
           PieceUtils.movePiece(selectedPiece.x, selectedPiece.y, toTile.x, toTile.y);
         }
-      }
-      else {
-        PieceUtils.movePiece(selectedPiece.x, selectedPiece.y, toTile.x, toTile.y);
+        
+        resetBoardTiles();
+        
         fromTile.color = previous_color;
         previous_color = null;
         selectState = STATE_UNSELECTED;
       }
+      else {
+        PieceUtils.movePiece(selectedPiece.x, selectedPiece.y, toTile.x, toTile.y);
+
+        resetBoardTiles();
+
+        selectState = STATE_UNSELECTED;
+      }
+    }
+    else {
+      
+      resetBoardTiles();
+      
+      selectState = STATE_UNSELECTED;
     }
   }
 }
 
 // This Redraws the Canvas when resized
-windowResized = function () {
+/*windowResized = function () {
   resizeCanvas(windowWidth, windowHeight);
 };
+*/

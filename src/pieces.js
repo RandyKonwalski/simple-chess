@@ -271,7 +271,7 @@ class Piece {
     switch (this.type) {
       case "king":
         image(
-          color === "black" ? pieceImages.king.black : pieceImages.king.white,
+          this.color === "black" ? pieceImages.king.black : pieceImages.king.white,
           this.x * tileSize + margin,
           this.y * tileSize + margin,
           tileSize - margin * 2,
@@ -280,7 +280,7 @@ class Piece {
         break;
       case "queen":
         image(
-          color === "black" ? pieceImages.queen.black : pieceImages.queen.white,
+          this.color === "black" ? pieceImages.queen.black : pieceImages.queen.white,
           this.x * tileSize + margin,
           this.y * tileSize + margin,
           tileSize - margin * 2,
@@ -289,7 +289,7 @@ class Piece {
         break;
       case "knight":
         image(
-          color === "black" ? pieceImages.knight.black : pieceImages.knight.white,
+          this.color === "black" ? pieceImages.knight.black : pieceImages.knight.white,
           this.x * tileSize + margin,
           this.y * tileSize + margin,
           tileSize - margin * 2,
@@ -298,7 +298,7 @@ class Piece {
         break;
       case "bishop":
         image(
-          color === "black" ? pieceImages.bishop.black : pieceImages.bishop.white,
+          this.color === "black" ? pieceImages.bishop.black : pieceImages.bishop.white,
           this.x * tileSize + margin,
           this.y * tileSize + margin,
           tileSize - margin * 2,
@@ -307,7 +307,7 @@ class Piece {
         break;
       case "rook":
         image(
-          color === "black" ? pieceImages.rook.black : pieceImages.rook.white,
+          this.color === "black" ? pieceImages.rook.black : pieceImages.rook.white,
           this.x * tileSize + margin,
           this.y * tileSize + margin,
           tileSize - margin * 2,
@@ -316,7 +316,7 @@ class Piece {
         break;
       case "pawn":
         image(
-          color === "black" ? pieceImages.pawn.black : pieceImages.pawn.white,
+          this.color === "black" ? pieceImages.pawn.black : pieceImages.pawn.white,
           this.x * tileSize + margin,
           this.y * tileSize + margin,
           tileSize - margin * 2,
@@ -326,6 +326,73 @@ class Piece {
       default:
         break;
     }
+  }
+
+  getPossibleMoves() {
+    let possibleMoves = [];
+
+    switch (this.type) {
+      case "king":
+        
+        break;
+      case "queen":
+        for(let i = 1; i < 8; i++){
+          possibleMoves.push({ x: this.x + i, y: this.y + i });
+          possibleMoves.push({ x: this.x - i, y: this.y + i });
+          possibleMoves.push({ x: this.x + i, y: this.y - i });
+          possibleMoves.push({ x: this.x - i, y: this.y - i });
+          possibleMoves.push({ x: this.x, y: this.y - i });
+          possibleMoves.push({ x: this.x, y: this.y + i });
+          possibleMoves.push({ x: this.x - i, y: this.y });
+          possibleMoves.push({ x: this.x + i, y: this.y });
+        }
+        break;
+      case "knight":
+        possibleMoves.push({ x: this.x + 1, y: this.y + 2 });
+        possibleMoves.push({ x: this.x - 1, y: this.y + 2 });
+
+        possibleMoves.push({ x: this.x + 1, y: this.y - 2 });
+        possibleMoves.push({ x: this.x - 1, y: this.y - 2 });
+
+        possibleMoves.push({ x: this.x + 2, y: this.y - 1 });
+        possibleMoves.push({ x: this.x - 2, y: this.y + 1 });
+
+        possibleMoves.push({ x: this.x - 2, y: this.y - 1 });
+        possibleMoves.push({ x: this.x + 2, y: this.y + 1 });
+        break;
+      case "bishop":
+        for(let i = 1; i < 8; i++){
+          possibleMoves.push({ x: this.x + i, y: this.y + i });
+          possibleMoves.push({ x: this.x - i, y: this.y + i });
+          possibleMoves.push({ x: this.x + i, y: this.y - i });
+          possibleMoves.push({ x: this.x - i, y: this.y - i });
+        }
+        break;
+      case "rook":
+        for(let i = 1; i < 8; i++){
+          possibleMoves.push({ x: this.x, y: this.y - i });
+          possibleMoves.push({ x: this.x, y: this.y + i });
+          possibleMoves.push({ x: this.x - i, y: this.y });
+          possibleMoves.push({ x: this.x + i, y: this.y });
+        }
+        break;
+      case "pawn":
+        if(this.color === "black"){
+          possibleMoves.push({ x: this.x, y: this.y - 1 });
+          if(!PieceUtils.getPieceByLocation(this.x, this.y - 1)) {
+            possibleMoves.push({ x: this.x, y: this.y - 2 });
+          }
+        }
+        else {
+          possibleMoves.push({ x: this.x, y: this.y + 1 });
+          if(!PieceUtils.getPieceByLocation(this.x, this.y + 1)) {
+            possibleMoves.push({ x: this.x, y: this.y + 2 });
+          }
+        }
+        break;
+    }
+
+    return possibleMoves;
   }
 }
 
@@ -342,15 +409,15 @@ class PieceUtils {
   static movePiece(fromX, fromY, toX, toY) {
     let pieceFrom = this.getPieceByLocation(fromX, fromY);
     if(pieceFrom){
-      eliminatePiece(toX, toY);
       pieceFrom.x = toX;
       pieceFrom.y = toY;
     }
   }
+  
+  static eliminatePiece(x, y) {
+    let New = allPieces.filter(piece => piece.x !== x || piece.y !== y);
+
+    allPieces = New;
+  }
 }
 
-function eliminatePiece(x, y) {
-  let New = allPieces.filter(piece => piece.x !== x || piece.y !== y);
-
-  allPieces = New;
-}

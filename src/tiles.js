@@ -12,9 +12,10 @@ class Tile {
     fill(this.color);
     rect(this.posX, this.posY, this.size, this.size);
   }
-}
+}  
 
 class TileUtil{
+
   static findTile(x, y) {
     let tile = tileData.filter(t => t.x === x && t.y === y);
 
@@ -39,14 +40,24 @@ class TileUtil{
       }
       return false;
     });
+
     if(tile[0]){
       return tile[0];
     }
+
     return null;
   }
   
   static changeTileColor(x, y, color) {
     let t = tileData.filter(tile => tile.x === x && tile.y === y);
-    t[0].color = color;
+    if(t[0]){
+      t[0].color = color;
+    }
+  }
+
+  static colorMultipleTiles(moves, color) {  
+    moves.forEach(move => {
+      this.changeTileColor(move.x, move.y, color);
+    });
   }
 }
