@@ -272,55 +272,55 @@ class Piece {
       case "king":
         image(
           this.color === "black" ? pieceImages.king.black : pieceImages.king.white,
-          this.x * tileSize + margin,
-          this.y * tileSize + margin,
-          tileSize - margin * 2,
-          tileSize - margin * 2
+          this.x * TILE_SIZE + TILE_PADDING,
+          this.y * TILE_SIZE + TILE_PADDING,
+          TILE_SIZE - TILE_PADDING * 2,
+          TILE_SIZE - TILE_PADDING * 2
         );
         break;
       case "queen":
         image(
           this.color === "black" ? pieceImages.queen.black : pieceImages.queen.white,
-          this.x * tileSize + margin,
-          this.y * tileSize + margin,
-          tileSize - margin * 2,
-          tileSize - margin * 2
+          this.x * TILE_SIZE + TILE_PADDING,
+          this.y * TILE_SIZE + TILE_PADDING,
+          TILE_SIZE - TILE_PADDING * 2,
+          TILE_SIZE - TILE_PADDING * 2
         );
         break;
       case "knight":
         image(
           this.color === "black" ? pieceImages.knight.black : pieceImages.knight.white,
-          this.x * tileSize + margin,
-          this.y * tileSize + margin,
-          tileSize - margin * 2,
-          tileSize - margin * 2
+          this.x * TILE_SIZE + TILE_PADDING,
+          this.y * TILE_SIZE + TILE_PADDING,
+          TILE_SIZE - TILE_PADDING * 2,
+          TILE_SIZE - TILE_PADDING * 2
         );
         break;
       case "bishop":
         image(
           this.color === "black" ? pieceImages.bishop.black : pieceImages.bishop.white,
-          this.x * tileSize + margin,
-          this.y * tileSize + margin,
-          tileSize - margin * 2,
-          tileSize - margin * 2
+          this.x * TILE_SIZE + TILE_PADDING,
+          this.y * TILE_SIZE + TILE_PADDING,
+          TILE_SIZE - TILE_PADDING * 2,
+          TILE_SIZE - TILE_PADDING * 2
         );
         break;
       case "rook":
         image(
           this.color === "black" ? pieceImages.rook.black : pieceImages.rook.white,
-          this.x * tileSize + margin,
-          this.y * tileSize + margin,
-          tileSize - margin * 2,
-          tileSize - margin * 2
+          this.x * TILE_SIZE + TILE_PADDING,
+          this.y * TILE_SIZE + TILE_PADDING,
+          TILE_SIZE - TILE_PADDING * 2,
+          TILE_SIZE - TILE_PADDING * 2
         );
         break;
       case "pawn":
         image(
           this.color === "black" ? pieceImages.pawn.black : pieceImages.pawn.white,
-          this.x * tileSize + margin,
-          this.y * tileSize + margin,
-          tileSize - margin * 2,
-          tileSize - margin * 2
+          this.x * TILE_SIZE + TILE_PADDING,
+          this.y * TILE_SIZE + TILE_PADDING,
+          TILE_SIZE - TILE_PADDING * 2,
+          TILE_SIZE - TILE_PADDING * 2
         );
         break;
       default:

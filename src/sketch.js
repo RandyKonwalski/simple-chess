@@ -1,5 +1,10 @@
 /* eslint-disable no-undef, no-unused-vars */
 
+// Settings
+const BOARD_SIZE = 8;
+const TILE_SIZE = 100;
+const TILE_PADDING = 13;
+
 let allPieces;
 let pieceImages;
 
@@ -18,9 +23,6 @@ let selectState = 0;
 let previous_color = null;
 let selectedPiece = [0, 0];
 
-const tileSize = 100;
-const margin = 13;
-
 function parseStartLocation(array) {
   let result = [];
 
@@ -37,7 +39,7 @@ function resetBoardTiles() {
   for (let y = 0; y < 8; y++) {
     for (let x = 0; x < 8; x++) {
       tileData.push(
-        new Tile(x, y, x * tileSize, y * tileSize, tileSize, color ? 0 : 255)
+        new Tile(x, y, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, color ? 0 : 255)
       );
       color = !color;
     }
@@ -163,7 +165,7 @@ function setup() {
   for (let y = 0; y < 8; y++) {
     for (let x = 0; x < 8; x++) {
       tileData.push(
-        new Tile(x, y, x * tileSize, y * tileSize, tileSize, color ? 0 : 255)
+        new Tile(x, y, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, color ? 0 : 255)
       );
       color = !color;
     }

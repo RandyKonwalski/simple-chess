@@ -29,9 +29,9 @@ class TileUtil{
   static findTileByLocation(x, y) {
     let tile = tileData.filter(t => {
       const minX = t.posX;
-      const maxX = t.posX + tileSize;
+      const maxX = t.posX + TILE_SIZE;
       const minY = t.posY;
-      const maxY = t.posY + tileSize;
+      const maxY = t.posY + TILE_SIZE;
   
       if(x > minX && x < maxX){
         if(y > minY && y < maxY){
