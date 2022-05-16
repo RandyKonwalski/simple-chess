@@ -12,9 +12,6 @@
   "author": "Danny Ruchtie",
   "license": "MIT",
   "devDependencies": {
-    "serve": "^11.2.0"
-  },
-  "dependencies": {
     "vite": "^2.9.6"
   }
 }
