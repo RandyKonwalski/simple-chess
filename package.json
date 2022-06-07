@@ -1,7 +1,7 @@
 {
   "name": "chess",
   "version": "1.0.0",
-  "description": "",
+  "description": "This game is a small chess game created with the help of p5.js",
   "main": "sketch.js",
   "scripts": {
     "dev": "vite",

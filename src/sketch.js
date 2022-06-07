@@ -109,16 +109,7 @@ const ngb = document.getElementById("newGameButton");
 ngb.addEventListener("click", newGameButton);
 
 function newGameButton() {
-  TileUtil.colorMultipleTiles({
-    startPos: {
-      x: 3,
-      y: 3
-    },
-    step: [
-      [2, STEP_DOWN],
-    ]
-  }, "red");
-  //allPieces = parseStartLocation(startLoc);
+  allPieces = parseStartLocation(startLoc);
 }
 
 /**
@@ -159,7 +150,34 @@ function setup() {
   var canvas = createCanvas(800, 800);
   canvas.parent('canvas');
 
-  allPieces = parseStartLocation(startLoc);
+  const debug = [
+    {
+      type: "bishop",
+      color: "white",
+      pos: {
+        x: 3, 
+        y: 3
+      }
+    },
+    {    
+      type: "pawn",
+      color: "black",
+      pos: {
+        x: 3, 
+        y: 7
+      },
+    },
+    {    
+      type: "pawn",
+      color: "black",
+      pos: {
+        x: 5, 
+        y: 5
+      },
+    }
+  ]
+
+  allPieces = parseStartLocation(debug);
 
   let color = true;
   for (let y = 0; y < 8; y++) {
@@ -179,6 +197,12 @@ function draw() {
 }
 
 function mouseClicked() {
+  if(EDITOR_MODE) {
+    
+    
+    return;
+  }
+
   if(selectState === 0) {
     let tile = TileUtil.findTileByLocation(mouseX, mouseY);
     // TODO: Check if tile has piece.

@@ -348,31 +348,107 @@ class Piece {
         }
         break;
       case "knight":
-        possibleMoves.push({ x: this.x + 1, y: this.y + 2 });
-        possibleMoves.push({ x: this.x - 1, y: this.y + 2 });
+        if (!PieceUtils.hasColoredPieceOnTile(this.x + 1, this.y + 2, this.color)) {
+          possibleMoves.push({ x: this.x + 1, y: this.y + 2 });
+        }
+        
+        if (!PieceUtils.hasColoredPieceOnTile(this.x - 1, this.y + 2, this.color)) {
+          possibleMoves.push({ x: this.x - 1, y: this.y + 2 });
+        }
 
-        possibleMoves.push({ x: this.x + 1, y: this.y - 2 });
-        possibleMoves.push({ x: this.x - 1, y: this.y - 2 });
+        if (!PieceUtils.hasColoredPieceOnTile(this.x + 1, this.y - 2, this.color)) {
+          possibleMoves.push({ x: this.x + 1, y: this.y - 2 });
+        }
 
-        possibleMoves.push({ x: this.x + 2, y: this.y - 1 });
-        possibleMoves.push({ x: this.x - 2, y: this.y + 1 });
+        if (!PieceUtils.hasColoredPieceOnTile(this.x - 1, this.y - 2, this.color)) {
+          possibleMoves.push({ x: this.x - 1, y: this.y - 2 });
+        }
 
-        possibleMoves.push({ x: this.x - 2, y: this.y - 1 });
-        possibleMoves.push({ x: this.x + 2, y: this.y + 1 });
+        if (!PieceUtils.hasColoredPieceOnTile(this.x + 2, this.y - 1, this.color)) {
+          possibleMoves.push({ x: this.x + 2, y: this.y - 1 });
+        }
+
+        if (!PieceUtils.hasColoredPieceOnTile(this.x - 2, this.y + 1, this.color)) {
+          possibleMoves.push({ x: this.x - 2, y: this.y + 1 });
+        }
+
+        if (!PieceUtils.hasColoredPieceOnTile(this.x - 2, this.y - 1, this.color)) {
+          possibleMoves.push({ x: this.x - 2, y: this.y - 1 });
+        }
+
+        if (!PieceUtils.hasColoredPieceOnTile(this.x + 2, this.y + 1, this.color)) {
+          possibleMoves.push({ x: this.x + 2, y: this.y + 1 });
+        }
         break;
       case "bishop":
         for(let i = 1; i < 8; i++){
-          possibleMoves.push({ x: this.x + i, y: this.y + i });
+          let piece = PieceUtils.getPieceByLocation(this.x + i, this.y + i);
+          if(piece){
+            if(piece.color === this.color){
+              
+            }
+            break;
+          }
+
+          if(!piece) {
+            possibleMoves.push({ x: this.x + i, y: this.y + i });
+          }
+        }
+
+        for(let i = 1; i < 8; i++){
+          let piece = PieceUtils.getPieceByLocation(this.x - i, this.y + i);
+          if(piece){
+            break;
+          }
           possibleMoves.push({ x: this.x - i, y: this.y + i });
+        }
+
+        for(let i = 1; i < 8; i++){
+          let piece = PieceUtils.getPieceByLocation(this.x + i, this.y - i);
+          if(piece){
+            break;
+          }
           possibleMoves.push({ x: this.x + i, y: this.y - i });
+        }
+
+        for(let i = 1; i < 8; i++){
+          let piece = PieceUtils.getPieceByLocation(this.x - i, this.y - i);
+          if(piece){
+            break;
+          }
           possibleMoves.push({ x: this.x - i, y: this.y - i });
         }
         break;
       case "rook":
         for(let i = 1; i < 8; i++){
+          let piece = PieceUtils.getPieceByLocation(this.x, this.y - i);
+          if(piece){
+            break;
+          }
           possibleMoves.push({ x: this.x, y: this.y - i });
+        }
+
+        for(let i = 1; i < 8; i++){
+          let piece = PieceUtils.getPieceByLocation(this.x, this.y + i);
+          if(piece){
+            break;
+          }
           possibleMoves.push({ x: this.x, y: this.y + i });
+        }
+
+        for(let i = 1; i < 8; i++){
+          let piece = PieceUtils.getPieceByLocation(this.x - i, this.y);
+          if(piece){
+            break;
+          }
           possibleMoves.push({ x: this.x - i, y: this.y });
+        }
+
+        for(let i = 1; i < 8; i++){
+          let piece = PieceUtils.getPieceByLocation(this.x + i, this.y);
+          if(piece){
+            break;
+          }
           possibleMoves.push({ x: this.x + i, y: this.y });
         }
         break;
@@ -397,6 +473,15 @@ class Piece {
 }
 
 class PieceUtils {
+  static hasColoredPieceOnTile(x, y, color){
+    let piece = allPieces.filter(p => p.x == x && p.y == y && p.color == color);
+
+    if(piece[0]){
+      return true;
+    }
+    return false;
+  }
+
   static getPieceByLocation(x, y){
     let piece = allPieces.filter(p => p.x == x && p.y == y);
 
